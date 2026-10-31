@@ -1,0 +1,13 @@
+{
+  "name": "stelar",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ORBIT: an interactive Solar System at true relative sizes, with hand gestures, voice and an AI space guide",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

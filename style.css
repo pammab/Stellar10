@@ -1,0 +1,411 @@
+/* STELLAR · Solar System Explorer — styles · 样式
+   Layout follows the team's original design; English first, Chinese second. */
+:root { color-scheme: dark; --accent: #8bd6ff; --panel: linear-gradient(145deg, #152332de, #08101ce8); --line: #ffffff1f; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #02050b; color: #edf3fa; font: 14px system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif; overflow: hidden; }
+canvas { display: block; touch-action: none; }
+button, input, select { font: inherit; }
+button { cursor: pointer; color: inherit; background: #ffffff08; border: 1px solid #ffffff22; border-radius: 9px; padding: 10px 14px; transition: border-color .2s, background .2s; }
+button:hover, button.active { border-color: var(--accent); background: #8bd6ff15; }
+button.primary { border-color: #8bd6ff66; background: #8bd6ff14; }
+button:disabled { opacity: .5; cursor: wait; }
+/* Languages: only the selected one shows · 只显示所选语言 · solo se ve el idioma elegido */
+.en, .zh, .es { display: block; }
+.en, .es { line-height: 1.5; }
+.zh { line-height: 1.6; letter-spacing: .02em; }
+html[data-lang=en] :is(.zh, .es), html[data-lang=zh] :is(.en, .es), html[data-lang=es] :is(.en, .zh) { display: none !important; }
+html[data-lang=zh] .zh, html[data-lang=es] .es { margin-top: 0 !important; color: inherit !important; font-size: inherit !important; }
+
+/* Header */
+body > header { position: fixed; top: 24px; left: 32px; right: 32px; display: flex; justify-content: space-between; align-items: center; gap: 16px; pointer-events: none; z-index: 3; }
+body > header > * { pointer-events: auto; }
+.logo { font-size: 21px; letter-spacing: .24em; }
+.logo small { display: block; color: #718498; font: 10px monospace; letter-spacing: .16em; margin-top: 7px; }
+.logo small .zh { font: 10px system-ui; }
+.headbuttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.headbuttons button { font-size: 11px; padding: 8px 12px; }
+
+/* Intro */
+.intro { position: fixed; left: 34px; top: 120px; pointer-events: none; max-width: 430px; z-index: 1; text-shadow: 0 1px 3px #000c, 0 0 18px #000a; }
+.eyebrow { font: 10px monospace; letter-spacing: .22em; color: var(--accent); }
+.eyebrow .zh { font: 11px system-ui; letter-spacing: .08em; }
+h1 { font-size: clamp(28px, 3.6vw, 50px); font-weight: 400; margin: 12px 0; }
+h1 .zh { font-size: .5em; color: #c8d8e6; }
+.intro p { color: #9aabbd; line-height: 1.8; font-size: 12px; }
+body.mode-focus .intro p { font: 11px monospace; letter-spacing: .2em; }
+
+/* Info panel */
+.panel { position: fixed; right: 30px; top: 120px; width: 340px; max-height: calc(100dvh - 250px); overflow: auto; background: var(--panel); border: 1px solid #8bb4d128; border-radius: 18px; padding: 24px; backdrop-filter: blur(20px); z-index: 2; scrollbar-width: thin; }
+.panel h2 { font-size: 33px; font-weight: 400; margin: 10px 0 4px; }
+.panel h2 .zh { font-size: .58em; }
+.panel .scale { font: 11px monospace; color: var(--accent); letter-spacing: .08em; margin-bottom: 8px; }
+.panel .scale .zh { font: 11px system-ui; }
+.panel p { color: #9aabbd; font-size: 12px; line-height: 1.8; }
+.panel p .zh { margin-top: 8px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 18px 0; }
+.facts small { display: block; font-size: 10px; color: #8094a7; margin-bottom: 5px; }
+.facts small .zh { font-size: 10px; margin-top: 1px; }
+.facts b { font-size: 13px; font-weight: 500; }
+.facts b .zh { font-size: 11px; }
+.panel .feature { border-left: 2px solid var(--accent); padding-left: 12px; }
+.panel .ask { width: 100%; margin-top: 6px; border-color: #8bd6ff66; background: #8bd6ff12; text-align: left; }
+.controls { border-top: 1px solid #ffffff16; padding-top: 14px; margin-top: 18px; }
+.control { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 11px; color: #afc0d0; margin: 13px 0 6px; }
+.control button { font-size: 11px; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+input[type=color] { border: 0; background: none; width: 35px; height: 26px; flex-shrink: 0; }
+.hidden { display: none !important; }
+
+/* Bottom nav */
+.nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; background: #08111ed9; padding: 9px; border: 1px solid #ffffff18; border-radius: 15px; backdrop-filter: blur(12px); z-index: 3; max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none; }
+.nav button { min-width: 74px; padding: 8px 10px; font-size: 11px; display: flex; flex-direction: column; align-items: center; }
+.nav button i { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 5px; box-shadow: 0 0 8px currentColor; }
+.nav .zh { font-size: 10px; margin-top: 2px; }
+.hint { position: fixed; bottom: 118px; left: 32px; color: #6e879b; font: 10px monospace; line-height: 1.6; max-width: 330px; z-index: 1; }
+.hint .zh { font-family: system-ui; }
+.hint .credit { display: block; margin-top: 8px; color: #56708a; }
+.hint .classic { display: inline-block; margin-top: 8px; color: #9fd8ff; text-decoration: none; border-bottom: 1px dashed #9fd8ff66; }
+
+
+/* Planet labels (clickable, also mark tiny planets) · 行星标签 */
+.tag { position: fixed; left: 0; top: 0; padding: 0; border: 0; background: none; border-radius: 50%; width: 0; height: 0; z-index: 1; color: #b6c8d8; }
+.tag .ring { position: absolute; left: calc(var(--size) / -2); top: calc(var(--size) / -2); width: var(--size); height: var(--size); border-radius: 50%; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); opacity: .7; transition: opacity .2s, border-color .2s; }
+.tag .name { position: absolute; left: 0; top: var(--off, 12px); transform: translateX(-50%); white-space: nowrap; font-size: 10px; text-align: center; text-shadow: 0 2px 8px #000; letter-spacing: .08em; }
+.tag .name .zh { font-size: 10px; margin-top: 0; }
+.tag.big .ring { opacity: 0; }
+.tag:hover, .tag.hover { background: none; }
+.tag.hover .ring { opacity: 1; border-color: var(--c); box-shadow: 0 0 14px color-mix(in srgb, var(--c) 50%, transparent); }
+.tag.hover .name { color: #fff; }
+body.mode-lineup .tag .ring { opacity: 0; }
+
+/* Camera preview & gestures · 摄像头与手势 */
+.camera { position: fixed; left: 32px; bottom: 28px; width: 230px; background: #091321e6; border: 1px solid #ffffff20; border-radius: 14px; overflow: hidden; z-index: 3; backdrop-filter: blur(12px); }
+.camview { position: relative; height: 150px; background: #050a12; }
+.camview video, .camview canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.camview video { transform: scaleX(-1); opacity: .55; }
+.gpill { padding: 9px 11px 2px; font-size: 11px; font-weight: 600; min-height: 34px; }
+.gpill .zh { font-weight: 400; }
+.guide { list-style: none; margin: 0; padding: 4px 11px 10px; font-size: 10px; color: #9fb2c4; }
+.guide li { display: grid; grid-template-columns: 22px 1fr; column-gap: 4px; padding: 3px 0; }
+.guide b { grid-row: span 2; font-size: 14px; font-weight: 400; }
+.guide .zh { margin: 0; font-size: 9.5px; }
+.hand-cursor { position: fixed; left: 0; top: 0; z-index: 20; pointer-events: none; --c: #8bd6ff; --p: 0; }
+.hand-cursor i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--c); box-shadow: 0 0 14px var(--c); background: radial-gradient(circle, var(--c) 0 3px, transparent 4px), conic-gradient(var(--c) calc(var(--p) * 360deg), transparent 0) border-box; -webkit-mask: radial-gradient(circle, #000 4px, transparent 5px, transparent 11px, #000 12px); mask: radial-gradient(circle, #000 4px, transparent 5px, transparent 11px, #000 12px); transition: width .15s, height .15s, left .15s, top .15s; }
+.hand-cursor[data-g=pinch] i { width: 22px; height: 22px; left: -11px; top: -11px; }
+.hand-cursor[data-g=open] i { width: 46px; height: 46px; left: -23px; top: -23px; }
+
+.status { position: fixed; left: 50%; top: 100px; transform: translateX(-50%); font-size: 11px; color: #c7e5f9; background: #0e1c2dee; padding: 10px 18px; border-radius: 14px; display: none; z-index: 30; max-width: 90vw; text-align: center; border: 1px solid #ffffff18; }
+#error { position: fixed; inset: 35% 10% auto; background: #122034; padding: 30px; z-index: 40; border-radius: 15px; display: none; line-height: 2; }
+
+body.cam-on .hint, body.cam-on .intro p { display: none; }
+
+#language { background: #ffffff08; color: #edf3fa; border: 1px solid #ffffff22; border-radius: 9px; padding: 8px 10px; font-size: 12px; cursor: pointer; }
+#language option { background: #0a1422; }
+.sens { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; padding: 2px 11px 6px; font-size: 10px; color: #9fb2c4; }
+.sens input { grid-column: 1; accent-color: var(--accent); }
+.sens b { grid-row: 1 / span 2; grid-column: 2; font: 13px monospace; color: #edf3fa; }
+.fps { position: absolute; right: 6px; top: 5px; font: 9px monospace; color: #9fb2c4; background: #0008; padding: 1px 5px; border-radius: 6px; }
+
+/* Ask Stellar chat · AI 对话 */
+.chatbtn { position: fixed; right: 30px; bottom: 28px; z-index: 4; display: flex; align-items: center; gap: 9px; padding: 10px 16px; border-radius: 24px; border: 1px solid #8bd6ff66; background: linear-gradient(135deg, #3a8fc2e6, #6b56c9e6); color: #fff; font-size: 12px; font-weight: 600; box-shadow: 0 8px 30px #3a8fc255; text-align: left; }
+.chatbtn:hover { border-color: #fff; background: linear-gradient(135deg, #3a8fc2, #6b56c9); }
+.chatbtn svg { width: 17px; height: 17px; flex-shrink: 0; }
+.chatbtn .zh { color: #e8f2ff; font-weight: 400; font-size: 10px; margin-top: 0; }
+.chatpanel { position: fixed; right: 30px; bottom: 90px; z-index: 6; width: 360px; height: min(520px, calc(100dvh - 200px)); display: none; flex-direction: column; border: 1px solid #8bb4d133; border-radius: 18px; background: #0a1422f2; backdrop-filter: blur(20px); box-shadow: 0 20px 70px #0008; overflow: hidden; }
+.chatpanel.show { display: flex; animation: rise .25s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+body.chat-open.mode-focus .chatpanel { right: 390px; }
+.chathead { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 13px 14px 11px; border-bottom: 1px solid #ffffff14; }
+.chattitle { font-size: 12px; font-weight: 600; }
+.chattitle .zh { font-weight: 400; }
+.chatctx { font: 9px monospace; letter-spacing: .1em; color: var(--accent); margin-top: 6px; text-transform: uppercase; }
+.chatctx .zh { font: 10px system-ui; text-transform: none; }
+.chattools { display: flex; gap: 4px; align-items: center; }
+.chattools select { background: #ffffff0a; color: #cfe0ee; border: 1px solid #ffffff22; border-radius: 8px; padding: 5px 4px; font-size: 11px; }
+.icon { padding: 4px 8px; font-size: 14px; line-height: 1; }
+#chatSpeak { opacity: .55; }
+#chatSpeak.on { opacity: 1; border-color: var(--accent); }
+.chatlog { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; scrollbar-width: thin; }
+.msg { max-width: 88%; padding: 9px 12px; border-radius: 13px; font-size: 12px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+.msg .zh { font-size: 11px; }
+.msg.bot { align-self: flex-start; background: #ffffff0d; color: #dfe7f0; border-bottom-left-radius: 4px; }
+.msg.me { align-self: flex-end; background: #3a8fc240; color: #f0f6fc; border-bottom-right-radius: 4px; }
+.msg.err { align-self: center; background: none; color: #f2aaa2; font-size: 11px; text-align: center; }
+.msg.note { align-self: center; background: none; color: #6f869a; font: 9px monospace; letter-spacing: .12em; text-transform: uppercase; padding: 3px; }
+.typing { display: inline-flex; gap: 4px; }
+.typing i { width: 5px; height: 5px; border-radius: 50%; background: #9aaebf; animation: blink 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay: .2s; } .typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+.chatsugg { display: flex; flex-wrap: wrap; gap: 5px; padding: 6px 12px; }
+.chatsugg button { padding: 5px 9px; font-size: 10px; border-radius: 12px; color: #a9dcff; text-align: left; }
+.chatsugg .zh { font-size: 9.5px; margin-top: 1px; }
+.chatform { display: flex; gap: 6px; padding: 10px 12px 12px; border-top: 1px solid #ffffff14; }
+.chatform input { flex: 1; min-width: 0; background: #ffffff0a; border: 1px solid #ffffff22; border-radius: 11px; padding: 9px 11px; color: #edf3fa; font-size: 12px; outline: none; }
+.chatform input:focus { border-color: var(--accent); }
+.chatform button { width: 38px; padding: 0; border-radius: 11px; display: grid; place-items: center; }
+.chatform svg { width: 17px; height: 17px; }
+.mic.live { border-color: #ff7a7a; background: #ff7a7a22; color: #ffb3ad; animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 #ff7a7a66; } 50% { box-shadow: 0 0 0 7px #ff7a7a00; } }
+
+/* Responsive */
+@media (max-width: 1100px) { .intro { max-width: 280px; } .hint { display: none; } body.chat-open.mode-focus .chatpanel { right: 30px; z-index: 7; } }
+@media (max-width: 800px) {
+  body > header { top: 14px; left: 14px; right: 14px; align-items: flex-start; }
+  .logo { font-size: 15px; } .logo small { max-width: 130px; font-size: 8px; }
+  .headbuttons { gap: 4px; max-width: 62vw; } .headbuttons button { font-size: 9.5px; padding: 6px 8px; } .headbuttons .zh { font-size: 9px; margin-top: 1px; }
+  .intro { top: 120px; left: 18px; max-width: 220px; } .intro p { font-size: 11px; }
+  body.mode-focus .intro, body.mode-lineup .intro p { display: none; }
+  .panel { left: 12px; right: 12px; top: auto; bottom: 108px; width: auto; max-height: 34dvh; padding: 16px; }
+  .panel h2 { font-size: 24px; }
+  .nav { bottom: 14px; } .nav button { min-width: 64px; padding: 7px 8px; }
+  .camera { left: 12px; top: 120px; bottom: auto; width: 150px; } .camview { height: 100px; } .guide { display: none; }
+  body.mode-focus .camera { top: 150px; }
+  .chatbtn { right: 12px; bottom: 96px; padding: 10px 12px; } .chatbtn > span { display: none; }
+  .chatpanel, body.chat-open.mode-focus .chatpanel { left: 10px; right: 10px; bottom: 10px; width: auto; height: 70dvh; }
+}
+
+/* Highlights: moons, living features, spacecraft · 亮点 */
+.hl { border-top: 1px solid #ffffff16; margin-top: 16px; padding-top: 6px; }
+.hl .hlh { font: 10px monospace; letter-spacing: .14em; color: var(--accent); margin: 14px 0 4px; text-transform: uppercase; }
+.hl .hlh .zh { font: 11px system-ui; letter-spacing: .06em; }
+.hl p { margin: 4px 0; }
+.hl ul { list-style: none; margin: 4px 0; padding: 0; color: #9aabbd; font-size: 12px; line-height: 1.6; }
+.hl li { margin: 6px 0; }
+.hl li b, .hl p b { color: #edf3fa; font-weight: 500; margin-right: 4px; }
+.hl li b { display: block; }
+.hl small { display: block; color: #6e879b; font-size: 10px; line-height: 1.5; margin-top: 12px; }
+.mtag { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; font-size: 10px; letter-spacing: .06em; color: #cfe0ee; text-shadow: 0 1px 4px #000, 0 0 10px #000; white-space: nowrap; padding-left: 10px; margin-top: -6px; display: none; }
+.mtag::before { content: ''; position: absolute; left: 0; top: 5px; width: 5px; height: 5px; border-radius: 50%; border: 1px solid currentColor; }
+.mtag.craft { color: #9fe3ff; }
+.mtag .zh, .mtag .es { margin: 0; }
+
+
+/* Habitability comparison lab */
+.habit-panel{position:fixed;z-index:10;inset:82px 28px 84px auto;width:min(860px,calc(100vw - 40px));overflow:auto;padding:22px;border:1px solid #8bb4d133;border-radius:18px;background:linear-gradient(145deg,#101e2af2,#07101df5);backdrop-filter:blur(20px);box-shadow:0 24px 80px #0009;scrollbar-width:thin}.habit-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.habit-head h2{font-size:25px;font-weight:400;margin:7px 0}.habit-head h2 .zh{font-size:.6em}.habit-head p{color:#91a5b8;font-size:11px;line-height:1.6;max-width:650px;margin:0}.habit-head>button{padding:4px 11px;font-size:20px}.habit-kicker,.habit-select-title{font:9px monospace;letter-spacing:.18em;color:var(--accent)}.habit-kicker .zh,.habit-select-title .zh{font:10px system-ui;letter-spacing:.05em}.habit-select-title{margin:18px 0 8px}.habit-choices{display:flex;flex-wrap:wrap;gap:6px}.habit-chip{display:flex;align-items:center;gap:7px;padding:6px 9px;font-size:9px;color:#b7c8d7;border-radius:16px}.habit-chip i,.habit-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--planet);box-shadow:0 0 8px var(--planet)}.habit-chip.selected{border-color:var(--planet);background:color-mix(in srgb,var(--planet) 12%,transparent);color:#fff}.habit-summary{display:grid;grid-template-columns:1fr 1.5fr;gap:8px;margin:12px 0}.habit-summary>div{padding:10px 12px;border:1px solid #ffffff13;border-radius:10px;background:#ffffff08}.habit-summary small,.habit-summary b,.habit-summary span{display:block}.habit-summary small{font:8px monospace;letter-spacing:.1em;color:#8095a8}.habit-summary b{font-size:16px;font-weight:500;margin:4px 0}.habit-summary span{font-size:10px;line-height:1.5;color:#b5c7d7}.habit-compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.habit-card{min-width:0;padding:12px;border-radius:12px;border:1px solid color-mix(in srgb,var(--planet) 35%,#ffffff12);background:linear-gradient(155deg,color-mix(in srgb,var(--planet) 7%,#ffffff08),#ffffff05)}.habit-card header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff13;padding-bottom:8px}.habit-card header>div:first-child{position:relative;padding-left:13px}.habit-card .habit-dot{position:absolute;left:0;top:7px}.habit-card h3{font-size:14px;font-weight:500;margin:0}.habit-card header small{display:block;font-size:8px;color:#8da1b3;margin-top:3px}.habit-score{text-align:right;color:var(--planet)}.habit-score b{font:24px monospace}.habit-score small{display:inline!important}.habit-facts{display:grid;grid-template-columns:1fr 1fr;gap:7px 8px;padding:10px 0}.habit-facts span,.habit-facts b{display:block}.habit-facts span{font-size:8px;color:#8297aa}.habit-facts b{font-size:9px;font-weight:500;color:#d7e4ef;margin-top:3px}.habit-factor{margin:8px 0}.habit-factor>div:first-child{display:flex;justify-content:space-between;align-items:center;font-size:8px;color:#aebfce}.habit-factor small{color:#6f879c;font-size:7px}.habit-factor b{font:9px monospace;color:#cdeaff}.habit-track{height:3px;background:#ffffff12;border-radius:3px;margin-top:4px;overflow:hidden}.habit-track i{display:block;height:100%;background:var(--planet);border-radius:3px}.habit-card>p{font-size:8px;line-height:1.5;color:#8197a9;margin:10px 0 0}.habit-note{font-size:9px;line-height:1.6;color:#8095a8;margin:12px 0 0}.habit-note .zh{font-size:9px}
+  .habit-panel{inset:70px 10px 84px;width:auto;padding:16px}.habit-head h2{font-size:21px}.habit-compare{grid-template-columns:1fr}.habit-summary{grid-template-columns:1fr 1.4fr}
+  .habit-data-source{align-items:flex-start;flex-direction:column}.habit-connect{width:100%;flex-wrap:wrap}.habit-connect input{flex:1;width:100px}
+#habitability { font-size: 11px; padding: 8px 12px; }
+@media (max-width: 800px) { #habitability { font-size: 9.5px; padding: 6px 8px; } }
+
+/* Habitability cards: show several comparisons at once. */
+.habit-panel { width: min(1120px, calc(100vw - 40px)); padding: 18px; }
+.habit-compare { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.habit-card { padding: 9px; }
+.habit-card header { padding-bottom: 5px; }
+.habit-card h3 { font-size: 13px; }
+.habit-facts { gap: 5px 7px; padding: 7px 0; }
+.habit-factor { margin: 5px 0; }
+.habit-card > p { margin-top: 6px; }
+@media (min-width: 1280px) { .habit-compare { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 800px) {
+  .habit-panel { width: auto; padding: 12px; }
+  .habit-compare { grid-template-columns: 1fr; }
+}
+
+/* Astronomy Resources */
+
+.resources-panel {
+    position: fixed;
+    z-index: 12;
+
+    top: 112px;
+    bottom: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(1050px, calc(100vw - 40px));
+    padding: 28px;
+
+    overflow-y: auto;
+
+    background: linear-gradient(
+        145deg,
+        #101e2af5,
+        #07101df8
+    );
+
+    border: 1px solid #8bb4d133;
+    border-radius: 18px;
+
+    backdrop-filter: blur(20px);
+    box-shadow: 0 24px 80px #0009;
+
+    scrollbar-width: thin;
+}
+
+/* Header */
+
+.resources-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.resources-header h2 {
+    font-size: 30px;
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.resources-header p {
+    color: #91a5b8;
+    font-size: 12px;
+    line-height: 1.8;
+    max-width: 620px;
+}
+
+#resourcesClose {
+    font-size: 18px;
+    padding: 6px 12px;
+}
+
+/* Category buttons */
+
+.resource-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 25px 0;
+}
+
+.resource-filters button {
+    font-size: 11px;
+    padding: 9px 14px;
+    border-radius: 20px;
+}
+
+.resource-filters button.active {
+    background: #8bd6ff20;
+    border-color: #8bd6ff;
+    color: #8bd6ff;
+}
+
+/* Resource grid */
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Resource cards */
+
+.resource-card {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 205px;
+    padding: 22px;
+
+    border: 1px solid #ffffff20;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff0b,
+        #ffffff04
+    );
+
+    text-decoration: none;
+    color: #edf3fa;
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s,
+        background 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-4px);
+    border-color: #8bd6ff88;
+    background: #8bd6ff12;
+}
+
+.resource-type {
+    color: #8bd6ff;
+    font: 10px monospace;
+    letter-spacing: 0.12em;
+}
+
+.resource-card h3 {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 16px 0 8px;
+}
+
+.resource-card p {
+    color: #91a5b8;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+
+.resource-link {
+    margin-top: auto;
+    color: #8bd6ff;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 900px) {
+    .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .resources-panel {
+        top: 75px;
+        bottom: 15px;
+        width: calc(100vw - 20px);
+        padding: 18px;
+    }
+
+    .resources-header h2 {
+        font-size: 23px;
+    }
+
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-card {
+        min-height: 170px;
+    }
+}
+
+/* Motion Trails and ambient music (team features) */
+
+.flight-panel{display:none;position:fixed;right:30px;top:155px;width:260px;padding:20px;background:linear-gradient(140deg,#102b3cda,#040c18ed);border:1px solid #73dfff40;border-radius:16px;z-index:3;backdrop-filter:blur(18px)}
+.flight-time{font:30px monospace;color:#b6ecff;margin:16px 0;text-shadow:0 0 20px #53caff66}.flight-panel label{font-size:11px;color:#a4bacb}.flight-panel label b{float:right}.flight-panel input{margin:14px 0}.flight-panel p{font-size:10px;line-height:1.7;color:#8fa9bd}.flight-actions{display:flex;gap:6px}.flight-actions button{font-size:10px;padding:8px}.flight-label{display:none;position:fixed;top:0;left:0;font:10px monospace;pointer-events:none;z-index:1;text-shadow:0 0 10px currentColor}.mode-trajectory .intro{max-width:320px}.mode-trajectory .hint{display:none}
+@media(max-width:800px){.flight-panel{top:auto;right:12px;bottom:115px;width:210px;padding:12px}.flight-panel p:last-child{max-height:62px;overflow:auto}.mode-trajectory .intro{top:140px;max-width:200px}.mode-trajectory .intro p{display:none}.flight-time{font-size:22px;margin:8px 0}}
+
+.mode-trajectory .intro{left:42px;top:138px;max-width:290px}.mode-trajectory .intro .eyebrow{color:#6cb4d2;letter-spacing:.32em}.mode-trajectory h1{font-size:clamp(30px,3.7vw,53px);line-height:1.1;font-weight:300;letter-spacing:-.04em}.mode-trajectory .intro p{font-size:11px;line-height:1.9;color:#91a6b7}.flight-panel{top:auto;bottom:145px;right:28px;border-radius:3px 18px 3px 18px;border-color:#7cdfff25;background:linear-gradient(140deg,#112737c9,#030a15e8);box-shadow:0 20px 80px #0005,inset 0 1px #b1edff12}.flight-time{font-weight:200;letter-spacing:-.06em}.flight-panel .eyebrow{font-size:9px;letter-spacing:.25em}.flight-panel p:last-child{font-size:9px;color:#617c91;border-top:1px solid #91d9ff16;padding-top:10px}.flight-label{font-size:9px;letter-spacing:.12em;padding:5px 9px;border-left:1px solid currentColor;background:linear-gradient(90deg,#050d17aa,transparent);text-shadow:0 1px 5px #000;opacity:.9}.flight-actions button{border-radius:4px;border-color:#8bd6ff25}
+@media(max-width:800px){.mode-trajectory .intro{top:145px;left:18px;max-width:180px}.flight-panel{bottom:112px;right:10px;width:195px}.flight-label{font-size:8px;padding:3px 5px}}
+
+/* Match the overview's clean, uniform body names. */
+.flight-label{color:#b6c8d8;background:none;border:0;border-radius:0;box-shadow:none;padding:0;font:10px system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.08em;text-transform:uppercase;text-align:center;white-space:nowrap;opacity:1;text-shadow:0 2px 8px #000}
+@media(max-width:800px){.flight-label{font-size:9px;padding:0}}
+
+.flight-label{pointer-events:auto;cursor:pointer;touch-action:manipulation;min-width:36px;min-height:24px;display:none}
+.flight-label:hover,.flight-label.hover{background:none;border:0;color:#f3faff;text-shadow:0 0 12px #b3e6ff88}
+.flight-label:focus-visible{outline:1px solid #b6c8d8;outline-offset:4px}
+
+/* Immersive, opt-in procedural soundtrack */
+.stellar-music{position:relative;display:flex;align-items:flex-start;gap:3px;pointer-events:auto}
+#musicToggle{min-width:102px}#musicToggle.active{color:#caedff;border-color:#8bd6ff88;box-shadow:inset 0 0 18px #8bd6ff0c}
+#musicOptions{padding:8px 9px;font-size:13px}.music-panel[hidden]{display:none!important}
+.music-panel{position:absolute;top:calc(100% + 12px);right:0;width:260px;padding:18px;border:1px solid #88cffb35;border-radius:14px;background:linear-gradient(145deg,#122737f5,#060d1af7);backdrop-filter:blur(24px);box-shadow:0 20px 70px #0009;z-index:15;text-align:left}
+.music-heading{font:9px monospace;letter-spacing:.19em;color:#82adc6}.music-now{display:flex;align-items:center;gap:10px;margin:17px 0 8px}.music-now i{width:7px;height:7px;border-radius:50%;background:#8293a0}.stellar-music:has(#musicToggle.active) .music-now i{background:#8bd6ff;box-shadow:0 0 12px #8bd6ff}
+.music-now strong{font-size:17px;font-weight:400;color:#e8f4fc}.music-panel p{font-size:10px;line-height:1.7;color:#8ca5b8;margin:8px 0 15px}.music-panel label{display:flex;justify-content:space-between;font-size:11px;color:#b8cbd8;margin-top:18px}.music-panel input{margin:12px 0 5px;width:100%;accent-color:#8bd6ff}.music-panel #musicNote{font-size:9px;border-top:1px solid #ffffff12;padding-top:12px;margin-bottom:0}
+@media(max-width:800px){#musicToggle{min-width:83px}.music-panel{position:fixed;top:115px;right:12px;width:min(260px,calc(100vw - 24px))}#musicOptions{padding:6px 8px}}
+
+/* Narration captions & voice toggle · 语音介绍字幕 */
+.caption { position: fixed; left: 50%; bottom: 104px; transform: translate(-50%, 8px); max-width: min(720px, calc(100vw - 32px)); padding: 10px 18px; border-radius: 14px; background: #06101cd9; border: 1px solid #8bd6ff33; color: #e6f2fb; font-size: 13px; line-height: 1.6; text-align: center; backdrop-filter: blur(12px); z-index: 5; opacity: 0; pointer-events: none; transition: opacity .35s, transform .35s; }
+.caption.show { opacity: 1; transform: translate(-50%, 0); }
+#voiceToggle { font-size: 11px; padding: 8px 12px; }
+#voiceToggle:not(.active) { opacity: .7; border-color: #ffffff22; background: #ffffff08; }
+@media (max-width: 800px) { .caption { bottom: 150px; font-size: 11.5px; } }

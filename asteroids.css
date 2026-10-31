@@ -1,0 +1,100 @@
+/* Asteroid Analyzer: Sentry impact-risk dashboard + ASTORB orbit explorer (team feature) */
+/* Asteroid Impact Risk Analyzer · 小行星近距离接近分析 */
+#asteroidApp { position:fixed; inset:0; z-index:50; display:none; overflow:auto; padding:92px 4vw 34px; background:radial-gradient(ellipse at 80% 0%,#12314b 0%,#07111f 42%,#02050b 100%); }
+#asteroidApp.open { display:block; }
+.asteroid-shell { max-width:1240px; margin:0 auto; }
+.asteroid-top { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-bottom:22px; }
+.asteroid-top h2 { font-size:clamp(25px,3vw,38px); font-weight:400; margin:5px 0 8px; }
+.asteroid-top p { color:#9aabbd; max-width:720px; line-height:1.7; margin:0; font-size:12px; }
+.asteroid-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.asteroid-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin:18px 0; }
+.asteroid-card,.asteroid-box { background:linear-gradient(145deg,#15283bdd,#091321ed); border:1px solid #8bb4d128; border-radius:14px; padding:16px; }
+.asteroid-card small { display:block; color:#8299ad; font-size:10px; letter-spacing:.1em; text-transform:uppercase; }
+.asteroid-card strong { display:block; font-size:25px; font-weight:400; margin-top:8px; color:#e9f5ff; }
+.asteroid-card span { display:block; color:#8fa5b9; font-size:10px; margin-top:4px; }
+.asteroid-layout { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr); gap:14px; align-items:start; }
+.asteroid-box h3 { font-size:15px; font-weight:500; margin:0 0 13px; }
+.asteroid-tools { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.asteroid-tools input,.asteroid-tools select { background:#07111e; color:#eaf4fc; border:1px solid #ffffff25; border-radius:8px; padding:9px 10px; min-width:0; }
+.asteroid-tools input { flex:1; }
+.asteroid-table-wrap { overflow:auto; max-height:440px; }
+.asteroid-table { width:100%; border-collapse:collapse; font-size:11px; white-space:nowrap; }
+.asteroid-table th { position:sticky; top:0; background:#101f30; color:#8fa7bc; font-weight:500; text-align:left; padding:10px 9px; }
+.asteroid-table td { border-top:1px solid #ffffff12; padding:10px 9px; color:#dce8f2; }
+.asteroid-table tr { cursor:pointer; }
+.asteroid-table tbody tr:hover,.asteroid-table tbody tr.selected { background:#8bd6ff12; }
+.asteroid-table .dist { color:#9bdcff; }
+.asteroid-detail { min-height:245px; }
+.asteroid-detail .big { font-size:24px; margin:4px 0 12px; }
+.asteroid-detail .metric { display:flex; justify-content:space-between; gap:10px; border-top:1px solid #ffffff14; padding:10px 0; color:#8fa5b9; font-size:11px; }
+.asteroid-detail .metric b { color:#eaf4fc; font-weight:500; text-align:right; }
+.asteroid-note { color:#8197aa; font-size:10px; line-height:1.7; margin-top:12px; }
+.asteroid-status { color:#a8c2d7; font-size:11px; padding:10px 0; }
+.asteroid-bar { height:8px; border-radius:8px; background:#ffffff12; overflow:hidden; margin:12px 0 6px; }
+.asteroid-bar i { display:block; height:100%; background:linear-gradient(90deg,#57c6e8,#e6bd6a); width:0; }
+#asteroidClose { flex-shrink:0; }
+@media(max-width:850px){ .asteroid-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.asteroid-layout{grid-template-columns:1fr;} #asteroidApp{padding:85px 14px 24px;} .asteroid-top{flex-direction:column;} }
+@media(max-width:480px){ .asteroid-grid{gap:8px;} .asteroid-card{padding:12px;} .asteroid-card strong{font-size:20px;} }
+
+
+/* ASTORB orbital explorer — isolated from the original solar-system renderer */
+.orbit-explorer { margin-top:16px; }
+.orbit-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
+.orbit-heading h3 { font-size:20px; margin:5px 0 6px; font-weight:500; }
+.orbit-total { min-width:115px; text-align:right; }
+.orbit-total strong { display:block; font-size:24px; color:#d8efff; }
+.orbit-total span { color:#91a9bd; font-size:10px; }
+.orbit-controls { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr); gap:14px; margin:14px 0; }
+.orbit-search,.orbit-date-control { background:#06111f99; border:1px solid #ffffff17; border-radius:11px; padding:12px; min-width:0; }
+.orbit-search label,.orbit-date-control label { display:flex; justify-content:space-between; gap:8px; color:#b9ccdc; font-size:11px; margin-bottom:8px; }
+.orbit-search-row { display:flex; gap:7px; }
+.orbit-search input,.orbit-search select { width:100%; min-width:0; background:#07111e; color:#eaf4fc; border:1px solid #ffffff25; border-radius:8px; padding:9px 10px; }
+.orbit-search-row button,.orbit-date-control button { border:1px solid #7ec9f255; background:#16354b; border-radius:8px; padding:8px 12px; white-space:nowrap; }
+.orbit-search select { margin-top:8px; height:96px; }
+.orbit-search select option { padding:4px; }
+.orbit-date-control input { width:100%; accent-color:#74d5f4; }
+.orbit-time-row { display:flex; justify-content:space-between; color:#8197aa; font-size:9px; margin:4px 0 10px; }
+.orbit-date-control button { width:100%; }
+.orbit-visual-grid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(240px,.7fr); gap:12px; align-items:stretch; }
+.orbit-canvas-wrap { min-width:0; border:1px solid #ffffff18; border-radius:12px; overflow:hidden; background:radial-gradient(ellipse at center,#0c2031,#030914 75%); }
+.orbit-canvas-title { display:flex; justify-content:space-between; padding:10px 12px; color:#a5bbcf; font-size:9px; letter-spacing:.1em; }
+#orbitCanvas { width:100%; height:auto; display:block; aspect-ratio:900/620; }
+.orbit-legend { display:flex; flex-wrap:wrap; gap:10px 16px; padding:8px 12px 12px; color:#a9bbcb; font-size:10px; }
+.orbit-legend span { display:flex; align-items:center; gap:5px; }
+.orbit-legend i { display:inline-block; width:8px; height:8px; border-radius:50%; }
+.legend-sun { background:#ffd36e; box-shadow:0 0 8px #ffbd45; }
+.legend-earth { border:1px dashed #52aef4; background:transparent; }
+.legend-asteroid { background:#ff8f65; }
+.legend-path { width:15px!important; height:2px!important; border-radius:0!important; background:#ff9a6b; }
+.orbit-facts { border:1px solid #ffffff18; border-radius:12px; padding:14px; background:#06111f99; min-width:0; }
+.orbit-facts h4 { margin:0 0 5px; font-size:17px; font-weight:500; }
+.orbit-facts .orbit-subtitle { color:#91a9bd; font-size:10px; margin-bottom:12px; }
+.orbit-fact-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.orbit-fact { background:#ffffff08; border-radius:8px; padding:8px; min-width:0; }
+.orbit-fact span { display:block; color:#8fa7bc; font-size:9px; margin-bottom:4px; }
+.orbit-fact b { display:block; color:#e4f2fc; font-size:13px; font-weight:500; overflow-wrap:anywhere; }
+.orbit-fact-empty { color:#91a9bd; font-size:12px; line-height:1.6; }
+.orbit-disclaimer { margin-top:12px; }
+@media(max-width:760px){ .orbit-controls,.orbit-visual-grid{grid-template-columns:1fr;} .orbit-heading{flex-direction:column;} .orbit-total{text-align:left;} }
+
+
+/* Plain-language concept notes · 概念解释 */
+.concept-note{display:block;color:#91a9bd;font-size:10px;line-height:1.5;margin-top:4px;font-weight:400;text-align:left}
+.metric .concept-note{flex:1 1 100%;max-width:100%}
+.metric{flex-wrap:wrap}
+.orbit-fact .concept-note{font-size:10px;color:#91a9bd;line-height:1.45}
+.orbit-help{margin:8px 0 0;padding:10px 12px;border:1px solid #ffffff18;border-radius:9px;background:#06111f99;color:#a9bdcf;font-size:11px;line-height:1.6}
+.orbit-help b{color:#e4f2fc}
+
+.ast-prob-chart{display:grid;gap:10px;margin-top:14px}
+.ast-prob-row{display:grid;grid-template-columns:112px minmax(60px,1fr) 76px;gap:10px;align-items:center;font-size:12px}
+.ast-prob-date{color:#b9c8d9;font-variant-numeric:tabular-nums}
+.ast-prob-track{height:10px;border-radius:20px;background:rgba(255,255,255,.09);overflow:hidden}
+.ast-prob-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#46b8d5,#f4b45e)}
+.ast-prob-value{text-align:right;color:#f4d4a3;font-variant-numeric:tabular-nums}
+.ast-overview{display:grid;gap:10px;margin:14px 0}
+.ast-overview .metric{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.ast-overview .metric span{color:#aabbd0}
+.ast-overview .metric b{text-align:right}
+@media(max-width:650px){.ast-prob-row{grid-template-columns:92px minmax(40px,1fr) 68px;gap:7px}}
+
